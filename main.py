@@ -12,6 +12,12 @@ button_status = ""
 
 
 @bot.message_handler(commands=["start"])
+def show_main_menu_first(message):
+    user_id = message.chat.id
+    bd.add_user_id(user_id)
+    buttons.main_menu(message)
+
+
 def show_main_menu(message):
     buttons.main_menu(message)
 

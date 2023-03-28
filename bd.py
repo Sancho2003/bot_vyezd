@@ -39,3 +39,10 @@ def get_timetable():
             list_activity_location.append(row[2])
     return list_activity_location
 
+
+def add_user_id(user_id):
+    sql = "INSERT IGNORE INTO vyezd_suir.users (user_id) VALUES (%s)"
+    val = (user_id,)
+    cursor.execute(sql, val)
+    db.commit()
+
