@@ -3,7 +3,8 @@ from settings import TG_TOKEN
 import buttons
 import bd
 import schedule
-import time
+from time import sleep
+from threading import Thread
 
 
 bot = telebot.TeleBot(TG_TOKEN)
@@ -57,9 +58,16 @@ def send_reminding():
         bot.send_message(user, reminding)
 
 
-schedule.every().day.at("22:23").do(send_reminding)
+def schedule_checker():
+    while True:
+        schedule.run_pending()
+        sleep(1)
 
-while True:
-    bot.polling(none_stop=True, interval=0)
-    schedule.run_pending()
-    time.sleep(1)
+
+schedule.every().day.at("01:08").do(send_reminding)
+Thread(target=schedule_checker).start()
+bot.polling(none_stop=True, interval=0)
+# while True:
+#     bot.polling(none_stop=True, interval=0)
+#     schedule.run_pending()
+#     sleep(1)
