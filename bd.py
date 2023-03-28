@@ -37,6 +37,5 @@ def get_timetable():
         if now < db_time:
             list_activity_location.append(row[1])
             list_activity_location.append(row[2])
-            print(row[1])
     return list_activity_location
 
