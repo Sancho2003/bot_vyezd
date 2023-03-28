@@ -57,12 +57,9 @@ def send_reminding():
         bot.send_message(user, reminding)
 
 
-schedule.every().day.at("21:00").do(send_reminding)
+schedule.every().day.at("22:23").do(send_reminding)
 
 while True:
-    try:
-        schedule.run_pending()
-        bot.polling(none_stop=True, timeout=60)
-    except Exception as e:
-        print(e)
-        time.sleep(15)
+    bot.polling(none_stop=True, interval=0)
+    schedule.run_pending()
+    time.sleep(1)
