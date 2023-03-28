@@ -18,11 +18,9 @@ def show_main_menu(message):
 
 @bot.message_handler(content_types='text')
 def get_words(message):
-    global message_text, message_id, button_status
+    global message_text, message_id
     message_text = message.text
     message_id = int(message.from_user.id)
-    if button_status == 'add':
-        buttons.Buttons(message).creating_keyboard(message)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == buttons.timetable)
