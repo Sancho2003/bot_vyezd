@@ -67,7 +67,3 @@ def schedule_checker():
 schedule.every().day.at("01:08").do(send_reminding)
 Thread(target=schedule_checker).start()
 bot.polling(none_stop=True, interval=0)
-# while True:
-#     bot.polling(none_stop=True, interval=0)
-#     schedule.run_pending()
-#     sleep(1)
