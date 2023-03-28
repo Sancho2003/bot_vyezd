@@ -44,12 +44,4 @@ def back_to_menu_function(call):
     show_main_menu(call)
 
 
-@bot.callback_query_handler(func=lambda call: call.data == buttons.add)
-def approve_button_func(call):
-    global button_status
-    if button_status == "add":
-        bd.add_to_db(message_text, message_id)
-        bot.send_message(call.from_user.id, "Готово")
-
-
 bot.polling(none_stop=True, interval=0)
