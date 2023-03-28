@@ -2,6 +2,8 @@ import telebot
 from settings import TG_TOKEN
 import buttons
 import bd
+import schedule
+import time
 
 
 bot = telebot.TeleBot(TG_TOKEN)
@@ -48,4 +50,19 @@ def back_to_menu_function(call):
     show_main_menu(call)
 
 
-bot.polling(none_stop=True, interval=0)
+def send_reminding():
+    users = bd.get_user_id()
+    reminding = "НапоминалОчка"
+    for user in users:
+        bot.send_message(user, reminding)
+
+
+schedule.every().day.at("21:00").do(send_reminding)
+
+while True:
+    try:
+        schedule.run_pending()
+        bot.polling(none_stop=True, timeout=60)
+    except Exception as e:
+        print(e)
+        time.sleep(15)

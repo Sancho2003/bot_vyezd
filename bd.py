@@ -46,3 +46,10 @@ def add_user_id(user_id):
     cursor.execute(sql, val)
     db.commit()
 
+
+def get_user_id():
+    user_id_list = list()
+    cursor.execute("SELECT user_id FROM vyezd_suir.users")
+    for row in cursor.fetchall():
+        user_id_list.append(int(row[0]))
+    return user_id_list
