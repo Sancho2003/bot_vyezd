@@ -15,7 +15,7 @@ button_status = ""
 
 
 @bot.message_handler(commands=["start"])
-def show_main_menu_first(message):
+def registration(message):
     user_id = message.chat.id
     if bd.user_checking(user_id):
         buttons.main_menu(message)
@@ -41,7 +41,7 @@ def get_surname(message, name, user_id):
 def get_isu_number(message, name, surname, user_id):
     isu_number_str = message.text
     if not isu_number_str.isnumeric() or len(isu_number_str) != 6:
-        bot.send_message(message.chat.id, "Попробуй ещё раз")
+        bot.send_message(message.chat.id, "Это должно быть число из 6 цифр")
         bot.register_next_step_handler(message, get_isu_number, name, surname,
                                        user_id)
     else:
