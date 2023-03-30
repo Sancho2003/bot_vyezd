@@ -96,4 +96,8 @@ def schedule_checker():
 
 schedule.every().day.at("14:38").do(send_reminding)
 Thread(target=schedule_checker).start()
-bot.polling(none_stop=True, interval=0)
+while True:
+    try:
+        bot.polling(none_stop=True, interval=0)
+    except Exception as e:
+        sleep(3)

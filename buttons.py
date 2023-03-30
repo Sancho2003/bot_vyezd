@@ -22,7 +22,6 @@ class Buttons:
 exit_button = "В меню"
 timetable = "Расписание"
 settlement = "Расселение"
-reminding = "Напоминание"
 
 
 @bot.message_handler(content_types="text")

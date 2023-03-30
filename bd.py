@@ -31,9 +31,9 @@ cursor = db.cursor()
 def get_timetable():
     list_activity_location = list()
     cursor.execute("SELECT data_time, activity, location FROM vyezd_suir.test_timetable")
-    now = datetime.now().time()
+    now = datetime.now()
     for row in cursor.fetchall():
-        db_time = row[0].time()
+        db_time = row[0]
         if now < db_time:
             list_activity_location.append(row[1])
             list_activity_location.append(row[2])
@@ -66,3 +66,4 @@ def add_info(user_id, name, surname, isu_number):
                    (name.capitalize(), surname.capitalize(), isu_number,
                     user_id))
     db.commit()
+
