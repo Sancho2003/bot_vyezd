@@ -64,7 +64,8 @@ def get_words(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == buttons.timetable)
 def timetable_function(call):
-    a = bd.get_timetable()
+    # a = bd.get_timetable()
+    # bot.send_message(call.from_user.id, "Сейчас " + a[0] + ", локация: " + a[1])
     bot.send_message(call.from_user.id, "Скоро здесь будет расписание!")
     buttons.Buttons(call).creating_keyboard(call)
 
