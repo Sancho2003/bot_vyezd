@@ -39,10 +39,16 @@ def get_surname(message, name, user_id):
 
 
 def get_isu_number(message, name, surname, user_id):
-    isu_number = message.text
-    bd.add_info(user_id, name, surname, isu_number)
-    bot.send_message(message.from_user.id, "Регистрация прошла успешно!")
-    buttons.main_menu(message)
+    isu_number_str = message.text
+    if not isu_number_str.isnumeric() or len(isu_number_str) != 6:
+        bot.send_message(message.chat.id, "Попробуй ещё раз")
+        bot.register_next_step_handler(message, get_isu_number, name, surname,
+                                       user_id)
+    else:
+        isu_number = int(isu_number_str)
+        bd.add_info(user_id, name, surname, isu_number)
+        bot.send_message(message.from_user.id, "Регистрация прошла успешно!")
+        buttons.main_menu(message)
 
 
 def show_main_menu(message):
