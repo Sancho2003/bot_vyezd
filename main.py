@@ -17,7 +17,31 @@ button_status = ""
 @bot.message_handler(commands=["start"])
 def show_main_menu_first(message):
     user_id = message.chat.id
-    bd.add_user_id(user_id)
+    if bd.user_checking(user_id):
+        buttons.main_menu(message)
+    else:
+        bd.add_user_id(user_id)
+        bot.send_message(message.from_user.id, "Введи имя:")
+        bot.register_next_step_handler(message, get_name, user_id)
+
+
+def get_name(message, user_id):
+    name = message.text
+    bot.send_message(message.from_user.id, "Введи фамилию:")
+    bot.register_next_step_handler(message, get_surname, name, user_id)
+
+
+def get_surname(message, name, user_id):
+    surname = message.text
+    bot.send_message(message.from_user.id, "Введи номер ИСУ:")
+    bot.register_next_step_handler(message, get_isu_number, name, surname,
+                                   user_id)
+
+
+def get_isu_number(message, name, surname, user_id):
+    isu_number = message.text
+    bd.add_info(user_id, name, surname, isu_number)
+    bot.send_message(message.from_user.id, "Регистрация прошла успешно!")
     buttons.main_menu(message)
 
 
@@ -35,13 +59,13 @@ def get_words(message):
 @bot.callback_query_handler(func=lambda call: call.data == buttons.timetable)
 def timetable_function(call):
     a = bd.get_timetable()
-    bot.send_message(call.from_user.id, "Сейчас " + a[0] + ", локация: " + a[1])
+    bot.send_message(call.from_user.id, "Скоро здесь будет расписание!")
     buttons.Buttons(call).creating_keyboard(call)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == buttons.settlement)
 def settlement_function(call):
-    bot.send_message(call.from_user.id, text="Пока ничего нет")
+    bot.send_message(call.from_user.id, "Скоро здесь будет список расселения!")
     buttons.Buttons(call).creating_keyboard(call)
 
 
@@ -64,6 +88,6 @@ def schedule_checker():
         sleep(1)
 
 
-schedule.every().day.at("01:08").do(send_reminding)
+schedule.every().day.at("14:38").do(send_reminding)
 Thread(target=schedule_checker).start()
 bot.polling(none_stop=True, interval=0)
