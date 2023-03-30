@@ -41,9 +41,8 @@ def get_timetable():
 
 
 def add_user_id(user_id):
-    sql = "INSERT INTO vyezd_suir.users (user_id) VALUES (%s)"
-    val = (user_id,)
-    cursor.execute(sql, val)
+    cursor.execute("INSERT INTO vyezd_suir.users (user_id) VALUES (%s)",
+                   (user_id,))
     db.commit()
 
 
@@ -62,15 +61,8 @@ def user_checking(user_id):
     return result is not None
 
 
-def add_user_name(name, user_id):
-    sql = "INSERT INTO vyezd_suir.users (name) VALUES (%s) WHERE user_id=%s"
-    val = (name, user_id)
-    cursor.execute(sql, val)
-    db.commit()
-
-
 def add_info(user_id, name, surname, isu_number):
-    sql = "UPDATE vyezd_suir.users SET name = %s, surname = %s, isu_number = %s WHERE user_id = %s"
-    val = (name.capitalize(), surname.capitalize(), isu_number, user_id)
-    cursor.execute(sql, val)
+    cursor.execute("UPDATE vyezd_suir.users SET name = %s, surname = %s, isu_number = %s WHERE user_id = %s",
+                   (name.capitalize(), surname.capitalize(), isu_number,
+                    user_id))
     db.commit()
