@@ -25,6 +25,12 @@ def registration(message):
         bot.register_next_step_handler(message, get_name, user_id)
 
 
+@bot.message_handler(commands=["support"])
+def support_info(message):
+    bot.send_message(message.from_user.id, "По всем техническим вопросам обращайтесь к [Саше](tg://user?id=842833101)",
+                     parse_mode='Markdown')
+
+
 def get_name(message, user_id):
     name = message.text
     bot.send_message(message.from_user.id, "Введи фамилию:")
@@ -102,3 +108,4 @@ while True:
         bot.polling(none_stop=True, interval=0)
     except Exception as e:
         sleep(3)
+        print(e)
