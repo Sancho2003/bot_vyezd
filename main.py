@@ -73,18 +73,27 @@ def timetable_function(call):
     # a = bd.get_timetable()
     # bot.send_message(call.from_user.id, "Сейчас " + a[0] + ", локация: " + a[1])
     bot.send_message(call.from_user.id, "Скоро здесь будет расписание!")
+    bot.edit_message_reply_markup(chat_id=call.from_user.id,
+                                  message_id=call.message.message_id,
+                                  reply_markup=None)
     buttons.Buttons(call).creating_keyboard(call)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == buttons.settlement)
 def settlement_function(call):
     bot.send_message(call.from_user.id, "Скоро здесь будет список расселения!")
+    bot.edit_message_reply_markup(chat_id=call.from_user.id,
+                                  message_id=call.message.message_id,
+                                  reply_markup=None)
     buttons.Buttons(call).creating_keyboard(call)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == buttons.exit_button)
 def back_to_menu_function(call):
     bot.send_message(call.from_user.id, text="Меню")
+    bot.edit_message_reply_markup(chat_id=call.from_user.id,
+                                  message_id=call.message.message_id,
+                                  reply_markup=None)
     show_main_menu(call)
 
 
