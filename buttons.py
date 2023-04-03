@@ -24,7 +24,7 @@ timetable = "Расписание"
 settlement = "Расселение"
 
 
-@bot.message_handler(content_types="text")
+@bot.message_handler(content_types=["text"])
 def main_menu(message):
     user_markup = telebot.types.InlineKeyboardMarkup()
     timetable_b = telebot.types.InlineKeyboardButton(

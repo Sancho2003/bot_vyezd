@@ -43,14 +43,14 @@ def get_isu_number(message, user_id):
             bot.send_message(message.chat.id, "Что-то надо написать наверное")
             buttons.main_menu(message)
         else:
-            bot.send_message(message.chat.id, "А ты не едешь на выезд")
+            bot.send_message(message.chat.id, "Упс, похоже тебя нет в списках на выезд \U0001F63F")
 
 
 def show_main_menu(message):
     buttons.main_menu(message)
 
 
-@bot.message_handler(content_types='text')
+@bot.message_handler(content_types=["text"])
 def get_words(message):
     global message_text, message_id
     message_text = message.text
