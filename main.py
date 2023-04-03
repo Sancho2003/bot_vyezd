@@ -20,9 +20,8 @@ def registration(message):
     if bd.user_checking(user_id):
         buttons.main_menu(message)
     else:
-        bd.add_user_id(user_id)
-        bot.send_message(message.from_user.id, "Введи имя:")
-        bot.register_next_step_handler(message, get_name, user_id)
+        bot.send_message(message.from_user.id, "Введи номер ИСУ:")
+        bot.register_next_step_handler(message, get_isu_number, user_id)
 
 
 @bot.message_handler(commands=["support"])
@@ -31,30 +30,20 @@ def support_info(message):
                      parse_mode='Markdown')
 
 
-def get_name(message, user_id):
-    name = message.text
-    bot.send_message(message.from_user.id, "Введи фамилию:")
-    bot.register_next_step_handler(message, get_surname, name, user_id)
-
-
-def get_surname(message, name, user_id):
-    surname = message.text
-    bot.send_message(message.from_user.id, "Введи номер ИСУ:")
-    bot.register_next_step_handler(message, get_isu_number, name, surname,
-                                   user_id)
-
-
-def get_isu_number(message, name, surname, user_id):
+def get_isu_number(message, user_id):
     isu_number_str = message.text
     if not isu_number_str.isnumeric() or len(isu_number_str) != 6:
         bot.send_message(message.chat.id, "Это должно быть число из 6 цифр")
-        bot.register_next_step_handler(message, get_isu_number, name, surname,
+        bot.register_next_step_handler(message, get_isu_number,
                                        user_id)
     else:
         isu_number = int(isu_number_str)
-        bd.add_info(user_id, name, surname, isu_number)
-        bot.send_message(message.from_user.id, "Регистрация прошла успешно!")
-        buttons.main_menu(message)
+        if bd.isu_checking(isu_number):
+            bd.add_user_id(user_id)
+            bot.send_message(message.chat.id, "Что-то надо написать наверное")
+            buttons.main_menu(message)
+        else:
+            bot.send_message(message.chat.id, "А ты не едешь на выезд")
 
 
 def show_main_menu(message):
