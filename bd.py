@@ -4,7 +4,6 @@ import sys
 import settings
 from datetime import datetime
 
-
 try:
     db = mysql.connector.connect(
         host=settings.bd_host,
@@ -24,13 +23,13 @@ except mysql.connector.Error as err:
         print(err)
         sys.exit()
 
-
 cursor = db.cursor()
 
 
 def get_timetable():
     list_activity_location = list()
-    cursor.execute("SELECT data_time, activity, location FROM vyezd_suir.test_timetable")
+    cursor.execute(
+        "SELECT data_time, activity, location FROM vyezd_suir.test_timetable")
     now = datetime.now()
     for row in cursor.fetchall():
         db_time = row[0]

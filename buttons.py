@@ -22,6 +22,7 @@ class Buttons:
 exit_button = "В меню"
 timetable = "Расписание"
 settlement = "Расселение"
+teams = "Команды"
 
 
 @bot.message_handler(content_types=["text"])
@@ -33,7 +34,11 @@ def main_menu(message):
     settlement_b = telebot.types.InlineKeyboardButton(
             text=settlement,
             callback_data=settlement)
+    teams_b = telebot.types.InlineKeyboardButton(
+            text=teams,
+            callback_data=teams)
     user_markup.add(timetable_b)
     user_markup.add(settlement_b)
+    user_markup.add(teams_b)
     bot.send_message(message.from_user.id, text="Выберите:",
                      reply_markup=user_markup)
